@@ -1,0 +1,18 @@
+{
+    "name": "hongyi/pay",
+    "description": "支付集合，集合国内外各大支付平台",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "zhubaiming",
+            "email": "other.zhubaiming@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Hongyi\\Pay\\": "src/"
+        }
+    }
+}
