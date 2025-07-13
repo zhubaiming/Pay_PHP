@@ -9,6 +9,7 @@ use Hongyi\Designer\Packers\BodyPacker;
 use Hongyi\Designer\Patchwerk;
 use Hongyi\Pay\Pay;
 use Hongyi\Pay\Services\Wechat;
+
 use function get_config;
 
 class RefundPlugin implements PluginInterface
@@ -27,8 +28,8 @@ class RefundPlugin implements PluginInterface
 
         $patchwerk->mergeParameters(array_merge([
             '_method' => 'POST',
-            '_headers' => ['User-Agent' => 'wechat-pay-v3'],
-            'notify_url' => 'https://wangxingren.fun/wechat_notify/pay/refunds'
+            '_headers' => ['User-Agent' => ' Payment wechat-pay-v3'],
+            'notify_url' => $config['refund_notify_url']
         ], $merges));
 
         return $next($patchwerk);

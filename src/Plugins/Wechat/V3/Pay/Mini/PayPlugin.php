@@ -29,7 +29,7 @@ class PayPlugin implements PluginInterface
         $patchwerk->mergeParameters(array_merge([
             '_method' => 'POST',
             '_headers' => ['User-Agent' => ' Payment wechat-pay-v3'],
-            'notify_url' => 'https://develop.wangxingren.fun/wechat_notify/pay/payment/jsapi'
+            'notify_url' => $config['pay_notify_url']
         ], $merges));
 
         return $next($patchwerk);

@@ -1,18 +1,17 @@
 <?php
 
 declare(strict_types=1);
-
 namespace Hongyi\Pay\Shortcuts\Wechat;
 
 use Hongyi\Designer\Contracts\ShortcutInterface;
-use Hongyi\Designer\Plugins\AddBodyToPayloadPlugin;
-use Hongyi\Designer\Plugins\AddRadarPlugin;
-use Hongyi\Designer\Plugins\ParserPlugin;
-use Hongyi\Designer\Plugins\StartPlugin;
 use Hongyi\Pay\Plugins\Wechat\BeginPlugin;
-use Hongyi\Pay\Plugins\Wechat\V3\AddPayloadSignaturePlugin;
+use Hongyi\Designer\Plugins\StartPlugin;
 use Hongyi\Pay\Plugins\Wechat\V3\Pay\Refund\RefundPlugin;
+use Hongyi\Designer\Plugins\AddBodyToPayloadPlugin;
+use Hongyi\Pay\Plugins\Wechat\V3\AddPayloadSignaturePlugin;
+use Hongyi\Designer\Plugins\AddRadarPlugin;
 use Hongyi\Pay\Plugins\Wechat\V3\VerifySignaturePlugin;
+use Hongyi\Designer\Plugins\ParserPlugin;
 
 class RefundShortcut implements ShortcutInterface
 {
