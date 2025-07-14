@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 if (!function_exists('get_certificate_content')) {
-    function get_certificate_content(string $path): string
+    function get_certificate_content(?string $path): string
     {
         if (is_file($path)) {
             if (!file_exists($path)) throw new \Exception();

@@ -23,9 +23,10 @@ class AddPayloadSignaturePlugin implements PluginInterface
         $nonce_str = random_nonce(32);
         $signContent = $this->getSignatureContent($patchwerk->getParameters(), $timestamp, $nonce_str);
 
-        $signature = $this->getSignature($timestamp, $nonce_str, $signContent);
+        $config = get_config('wechat');
+        $signature = $this->getSignature($config, $timestamp, $nonce_str, $signContent);
 
-        $patchwerk->mergeParameters(['_authorization' => $signature]);
+        $patchwerk->mergeParameters(['_authorization' => $signature, '_headers' => ['Wechatpay-Serial' => $config['public_key_id']]]);
 
         return $next($patchwerk);
     }
@@ -38,9 +39,8 @@ class AddPayloadSignaturePlugin implements PluginInterface
             $url_parse['path'] . (isset($url_parse['query']) ? '?' . $url_parse['query'] : '') . "\n{$timestamp}\n{$nonce_str}\n{$parameters['_body']}\n";
     }
 
-    private function getSignature($timestamp, $nonce_str, $signContent): string
+    private function getSignature($config, $timestamp, $nonce_str, $signContent): string
     {
-        $config = get_config('wechat');
         if (empty($mchPublicCertPath = $config['mch_public_cert_path'] ?? null) || empty($mchSecretCertPath = $config['mch_secret_cert_path'] ?? null)) {
             throw new InvalidConfigException('配置异常: 缺少商户API证书文件配置', Exception::CONFIG_FILE_ERROR);
         }
