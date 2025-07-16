@@ -31,6 +31,8 @@ class VerifySignaturePlugin implements PluginInterface
         $wechatpayNonce = $originDestination->getHeaderLine('Wechatpay-Nonce');
         $wechatpayTimestamp = $originDestination->getHeaderLine('Wechatpay-Timestamp');
 
+//        if (300 >= intval(abs(intval(bcsub(Formatter::timestamp(), $wechatpayTimestamp, 0)))))
+
         $originBody = $originDestination->getBody()->getContents();
 
         return "{$wechatpayTimestamp}\n{$wechatpayNonce}\n{$originBody}\n";
@@ -42,11 +44,18 @@ class VerifySignaturePlugin implements PluginInterface
         $wechatpaySignature = $originDestination->getHeaderLine('Wechatpay-Signature');
 //        $wechatpaySerial = $originDestination->getHeaderLine('Wechatpay-Serial');
 
-        if (!verify_wechat_sign(
-            get_certificate_content($config['mch_public_key_path']),
-            $signContent,
-            $wechatpaySignature
-        )) {
+
+
+        /*
+         * // 检查通知时间偏移量，允许5分钟之内的偏移
+        $timeOffsetStatus = ;
+         */
+
+        if (empty($mchPublicKeyPath = $config['mch_public_key_path'] ?? null)) {
+            throw new InvalidConfigException('配置异常: 缺少商户API密钥文件配置', Exception::CONFIG_FILE_ERROR);
+        }
+
+        if (!verify_wechat_sign(get_certificate_content($mchPublicKeyPath), $signContent, $wechatpaySignature)) {
             throw new InvalidConfigException('微信验证应答签名失败', Exception::CONFIG_ERROR);
         }
     }
