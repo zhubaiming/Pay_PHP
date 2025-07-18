@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hongyi\Pay\Plugins\Wechat\V3\Callback;
 
-use Closure;
 use Hongyi\Designer\Contracts\PluginInterface;
 use Hongyi\Designer\Exceptions\Exception;
 use Hongyi\Designer\Exceptions\InvalidConfigException;
@@ -15,7 +14,7 @@ use function decrypt_wechat_content;
 
 class DecryptContentPlugin implements PluginInterface
 {
-    public function handle(Patchwerk $patchwerk, Closure $next): Patchwerk
+    public function handle(Patchwerk $patchwerk, \Closure $next): Patchwerk
     {
         $patchwerk = $next($patchwerk);
 

@@ -19,14 +19,15 @@ class AddPayloadSignaturePlugin implements PluginInterface
 {
     public function handle(Patchwerk $patchwerk, \Closure $next): Patchwerk
     {
+        $parameters = $patchwerk->getParameters();
         $timestamp = time();
         $nonce_str = random_nonce(32);
-        $signContent = $this->getSignatureContent($patchwerk->getParameters(), $timestamp, $nonce_str);
+        $signContent = $this->getSignatureContent($parameters, $timestamp, $nonce_str);
 
         $config = Wechat::getConfig();
         $signature = $this->getSignature($config, $timestamp, $nonce_str, $signContent);
 
-        $patchwerk->mergeParameters(['_authorization' => $signature, '_headers' => ['Wechatpay-Serial' => $config['public_key_id']]]);
+        $patchwerk->mergeParameters(['_authorization' => $signature, '_headers' => array_merge($parameters['_headers'] ?? [], ['Wechatpay-Serial' => $config['public_key_id']])]);
 
         return $next($patchwerk);
     }
