@@ -10,7 +10,7 @@ use Hongyi\Designer\Exceptions\Exception;
 use Hongyi\Designer\Exceptions\InvalidConfigException;
 use Hongyi\Designer\Patchwerk;
 
-use function get_config;
+use Hongyi\Pay\Services\Wechat;
 use function decrypt_wechat_content;
 
 class DecryptContentPlugin implements PluginInterface
@@ -26,7 +26,7 @@ class DecryptContentPlugin implements PluginInterface
         }
 
         $resource = $destination['resource'];
-        $config = get_config('wechat');
+        $config = Wechat::getConfig();
 
         $response = json_decode(decrypt_wechat_content($resource['ciphertext'], $config['mch_api_v3_key'], $resource['nonce'], $resource['associated_data']), true);
 

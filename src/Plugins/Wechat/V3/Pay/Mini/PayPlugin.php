@@ -10,15 +10,13 @@ use Hongyi\Designer\Patchwerk;
 use Hongyi\Pay\Pay;
 use Hongyi\Pay\Services\Wechat;
 
-use function get_config;
-
 class PayPlugin implements PluginInterface
 {
     public function handle(Patchwerk $patchwerk, \Closure $next): Patchwerk
     {
         $patchwerk->setPacker(new BodyPacker());
 
-        $config = get_config('wechat');
+        $config = Wechat::getConfig();
 
         $merges = match ($config['mode']) {
             Pay::MODE_MERCHANT => $this->merchant($config),

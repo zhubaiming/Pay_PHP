@@ -9,9 +9,9 @@ use Hongyi\Designer\Exceptions\Exception;
 use Hongyi\Designer\Exceptions\InvalidConfigException;
 use Hongyi\Designer\Patchwerk;
 
+use Hongyi\Pay\Services\Wechat;
 use function random_nonce;
 use function get_radar_method;
-use function get_config;
 use function get_certificate_content;
 use function get_wechat_sign;
 
@@ -23,7 +23,7 @@ class AddPayloadSignaturePlugin implements PluginInterface
         $nonce_str = random_nonce(32);
         $signContent = $this->getSignatureContent($patchwerk->getParameters(), $timestamp, $nonce_str);
 
-        $config = get_config('wechat');
+        $config = Wechat::getConfig();
         $signature = $this->getSignature($config, $timestamp, $nonce_str, $signContent);
 
         $patchwerk->mergeParameters(['_authorization' => $signature, '_headers' => ['Wechatpay-Serial' => $config['public_key_id']]]);

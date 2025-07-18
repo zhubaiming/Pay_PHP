@@ -9,7 +9,6 @@ use Hongyi\Designer\Packers\BodyPacker;
 use Hongyi\Designer\Patchwerk;
 use Hongyi\Pay\Pay;
 use Hongyi\Pay\Services\Wechat;
-use function get_config;
 
 class ClosePlugin implements PluginInterface
 {
@@ -17,7 +16,7 @@ class ClosePlugin implements PluginInterface
     {
         $patchwerk->setPacker(new BodyPacker());
 
-        $config = get_config('wechat');
+        $config = Wechat::getConfig();
 
         $merges = match ($config['mode']) {
             Pay::MODE_MERCHANT => $this->merchant($config),

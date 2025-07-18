@@ -10,8 +10,8 @@ use Hongyi\Designer\Exceptions\Exception;
 use Hongyi\Designer\Exceptions\InvalidConfigException;
 use Hongyi\Designer\Patchwerk;
 
+use Hongyi\Pay\Services\Wechat;
 use function random_nonce;
-use function get_config;
 use function get_certificate_content;
 use function get_wechat_sign;
 
@@ -41,7 +41,7 @@ class InvokePlugin implements PluginInterface
 
     private function getSignature($timestamp, $nonce_str, $prepay_id, $signContent): array
     {
-        $config = get_config('wechat');
+        $config = Wechat::getConfig();
         if (empty($mchPublicCertPath = $config['mch_public_cert_path'] ?? null) || empty($mchSecretCertPath = $config['mch_secret_cert_path'] ?? null)) {
             throw new InvalidConfigException('配置异常: 缺少商户API证书文件配置', Exception::CONFIG_FILE_ERROR);
         }

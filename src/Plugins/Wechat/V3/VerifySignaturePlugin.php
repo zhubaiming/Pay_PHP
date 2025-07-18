@@ -9,8 +9,7 @@ use Hongyi\Designer\Contracts\PluginInterface;
 use Hongyi\Designer\Exceptions\Exception;
 use Hongyi\Designer\Exceptions\InvalidConfigException;
 use Hongyi\Designer\Patchwerk;
-
-use function get_config;
+use Hongyi\Pay\Services\Wechat;
 use function get_certificate_content;
 
 class VerifySignaturePlugin implements PluginInterface
@@ -40,7 +39,7 @@ class VerifySignaturePlugin implements PluginInterface
 
     private function verifySignature($originDestination, $signContent): void
     {
-        $config = get_config('wechat');
+        $config = Wechat::getConfig();
         $wechatpaySignature = $originDestination->getHeaderLine('Wechatpay-Signature');
 //        $wechatpaySerial = $originDestination->getHeaderLine('Wechatpay-Serial');
 

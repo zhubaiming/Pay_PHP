@@ -24,7 +24,7 @@ class Pay
         // 4、调用Vaults::shortcut执行快捷通道中包含的所有组件
         $this->getAllConfigs();
 
-        $this->getAllProviders($name);
+//        $this->getAllProviders($name);
     }
 
     public static function getInstance($name): ?self
@@ -39,7 +39,7 @@ class Pay
     public function __call(string $name, array $arguments)
     {
 //        return Vaults::get($name, $arguments);
-        return new Wechat();
+        return new Wechat(...$arguments);
     }
 
     public static function __callStatic(string $name, array $arguments)
