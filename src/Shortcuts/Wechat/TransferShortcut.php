@@ -12,6 +12,7 @@ use Hongyi\Designer\Plugins\StartPlugin;
 use Hongyi\Pay\Plugins\Wechat\BeginPlugin;
 use Hongyi\Pay\Plugins\Wechat\V3\AddPayloadSignaturePlugin;
 use Hongyi\Pay\Plugins\Wechat\V3\Marketing\Transfer\BillsPlugin;
+use Hongyi\Pay\Plugins\Wechat\V3\Marketing\Transfer\InvokePlugin;
 use Hongyi\Pay\Plugins\Wechat\V3\VerifySignaturePlugin;
 
 class TransferShortcut implements ShortcutInterface
@@ -25,6 +26,7 @@ class TransferShortcut implements ShortcutInterface
             AddBodyToPayloadPlugin::class,
             AddPayloadSignaturePlugin::class,
             AddRadarPlugin::class,
+            InvokePlugin::class,
             VerifySignaturePlugin::class,
             ParserPlugin::class
         ];
