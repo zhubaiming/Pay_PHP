@@ -18,7 +18,7 @@ class Wechat
 
     public static array $config;
 
-    public function __construct(string $type = 'defalut')
+    public function __construct(string $type = 'default')
     {
         self::$config = get_config('wechat', $type);
     }
