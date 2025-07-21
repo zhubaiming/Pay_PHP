@@ -8,6 +8,7 @@ use Hongyi\Designer\Vaults;
 use Hongyi\Pay\Pay;
 
 use function get_config;
+use function get_parent_namespace;
 
 class Wechat
 {
