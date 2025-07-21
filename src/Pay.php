@@ -82,14 +82,17 @@ class Pay
 
         if (is_readable($cacheConfigPath)) {
             $configPath = $cacheConfigPath;
+
+            $config = (require $configPath)['pay'];
         } else {
             $configPath = dirname(getcwd()) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'pay.php';
 
             if (!is_readable($configPath)) {
                 throw new InvalidConfigException('配置文件不存在或不可读[配置文件应当存在于项目根目录下的`config`文件夹, 并命名为`pay.php`]', Exception::CONFIG_FILE_ERROR);
             }
+            $config = require $configPath;
         }
 
-        Vaults::config(require $configPath);
+        Vaults::config($config);
     }
 }
