@@ -16,9 +16,9 @@ class CancelPlugin implements PluginInterface
         $config = Wechat::getConfig();
         $parameters = $patchwerk->getParameters();
 
-        $patchwerk->mergeParameters([
+        $patchwerk->setParameters([
             '_method' => 'POST',
-            '_url' => Wechat::URL[$config['mode']] . '/v3/fund-app/mch-transfer/transfer-bills/' . $parameters['out_bill_no'] . '/cancel',
+            '_url' => Wechat::URL[$config['mode']] . '/v3/fund-app/mch-transfer/transfer-bills/out-bill-no/' . $parameters['out_bill_no'] . '/cancel',
             '_headers' => ['User-Agent' => ' Payment wechat-pay-v3']
         ]);
 
