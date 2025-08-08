@@ -5,22 +5,21 @@ declare(strict_types=1);
 namespace Hongyi\Pay\Plugins\Wechat\V3;
 
 use Hongyi\Designer\Contracts\PluginInterface;
-use Hongyi\Designer\Packers\BodyPacker;
+use Hongyi\Designer\Packers\JsonPacker;
 use Hongyi\Designer\Patchwerk;
-use Hongyi\Pay\Pay;
 use Hongyi\Pay\Services\Wechat;
 
 class ClosePlugin implements PluginInterface
 {
     public function handle(Patchwerk $patchwerk, \Closure $next): Patchwerk
     {
-        $patchwerk->setPacker(new BodyPacker());
+        $patchwerk->setPacker(new JsonPacker());
 
         $config = Wechat::getConfig();
 
         $merges = match ($config['mode']) {
-            Pay::MODE_MERCHANT => $this->merchant($config),
-            Pay::MODE_PARTNER => $this->partner($config),
+            Wechat::MODE_MERCHANT => $this->merchant($config),
+            Wechat::MODE_PARTNER => $this->partner($config),
             default => []
         };
 
@@ -30,7 +29,6 @@ class ClosePlugin implements PluginInterface
 
         $patchwerk->setParameters(array_merge([
             '_method' => 'POST',
-            '_headers' => ['User-Agent' => 'wechat-pay-v3'],
         ], $merges));
 
         return $next($patchwerk);

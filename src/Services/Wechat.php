@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace Hongyi\Pay\Services;
 
 use Hongyi\Designer\Vaults;
-use Hongyi\Pay\Pay;
 
 use function get_config;
 use function get_parent_namespace;
 
 class Wechat
 {
+    public const MODE_MERCHANT = 0;
+    public const MODE_PARTNER = 1;
+
     public const URL = [
-        Pay::MODE_MERCHANT => 'https://api.mch.weixin.qq.com',
-        Pay::MODE_PARTNER => 'http://192.168.31.3:8000/wechatPay',
+        self::MODE_MERCHANT => 'https://api.mch.weixin.qq.com',
+        self::MODE_PARTNER => 'https://api.mch.weixin.qq.com'
     ];
 
     public static array $config;

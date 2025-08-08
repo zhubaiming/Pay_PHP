@@ -28,7 +28,7 @@ class MiniShortcut implements ShortcutInterface
             AddRadarPlugin::class,
             InvokePlugin::class,
             VerifySignaturePlugin::class,
-            ParserPlugin::class,
+            ParserPlugin::class
         ];
     }
 }

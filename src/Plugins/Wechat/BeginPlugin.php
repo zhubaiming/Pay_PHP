@@ -14,6 +14,10 @@ class BeginPlugin implements PluginInterface
     {
         $patchwerk->setHttpEnum(HttpEnum::OK);
 
+        $patchwerk->mergeParameters([
+            '_headers' => ['User-Agent' => 'Payment wechat-pay-v3']
+        ]);
+
         return $next($patchwerk);
     }
 }

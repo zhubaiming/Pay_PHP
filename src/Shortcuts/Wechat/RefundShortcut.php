@@ -25,7 +25,7 @@ class RefundShortcut implements ShortcutInterface
             AddPayloadSignaturePlugin::class,
             AddRadarPlugin::class,
             VerifySignaturePlugin::class,
-            ParserPlugin::class,
+            ParserPlugin::class
         ];
     }
 }

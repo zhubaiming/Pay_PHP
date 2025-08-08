@@ -8,8 +8,8 @@ use Hongyi\Designer\Contracts\PluginInterface;
 use Hongyi\Designer\Exceptions\Exception;
 use Hongyi\Designer\Exceptions\InvalidConfigException;
 use Hongyi\Designer\Patchwerk;
-
 use Hongyi\Pay\Services\Wechat;
+
 use function decrypt_wechat_content;
 
 class DecryptContentPlugin implements PluginInterface
@@ -19,12 +19,13 @@ class DecryptContentPlugin implements PluginInterface
         $patchwerk = $next($patchwerk);
 
         $destination = $patchwerk->getDestination();
+        $_body = $destination['body'];
 
-        if ('encrypt-resource' !== $destination['resource_type']) {
+        if ('encrypt-resource' !== $_body['resource_type']) {
             throw new InvalidConfigException('微信通知资源数据类型错误', Exception::CONFIG_ERROR);
         }
 
-        $resource = $destination['resource'];
+        $resource = $_body['resource'];
         $config = Wechat::getConfig();
 
         $response = json_decode(decrypt_wechat_content($resource['ciphertext'], $config['mch_api_v3_key'], $resource['nonce'], $resource['associated_data']), true);

@@ -8,8 +8,8 @@ use Hongyi\Designer\Contracts\PluginInterface;
 use Hongyi\Designer\Exceptions\Exception;
 use Hongyi\Designer\Exceptions\InvalidConfigException;
 use Hongyi\Designer\Patchwerk;
-
 use Hongyi\Pay\Services\Wechat;
+
 use function random_nonce;
 use function get_certificate_content;
 use function get_wechat_sign;
@@ -20,13 +20,15 @@ class InvokePlugin implements PluginInterface
     {
         $patchwerk = $next($patchwerk);
 
-        $prepayId = $patchwerk->getDestination()['prepay_id'];
+        $destination = $patchwerk->getDestination();
+
+        $prepay_id = $destination['body']['prepay_id'];
         $timestamp = time();
-        $nonce_str = random_nonce(32);
+        $nonce_str = random_nonce();
 
-        $signContent = $this->getSignatureContent($patchwerk->getParameters(), $timestamp, $nonce_str, $prepayId);
+        $signContent = $this->getSignatureContent($patchwerk->getParameters(), $timestamp, $nonce_str, $prepay_id);
 
-        $signature = $this->getSignature($timestamp, $nonce_str, $prepayId, $signContent);
+        $signature = $this->getSignature($timestamp, $nonce_str, $prepay_id, $signContent);
 
         $patchwerk->setDestination($signature);
 
